@@ -89,9 +89,9 @@ public class LinkedListDeque<T>{
        }
        return data;
     }
-    public static void main(String[] args){
+    /*public static void main(String[] args){
         int i = 0;
-        LinkedListDeque a = new LinkedListDeque();
+        LinkedListDeque a = new LinkedListDeque(9);
         while(i<30){
             a.addFirst(i);
             a.addLast(i);
@@ -103,5 +103,5 @@ public class LinkedListDeque<T>{
             i++;
         }
         a.printDeque();
-    }
+    }*/
 }
