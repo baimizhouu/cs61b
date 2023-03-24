@@ -21,6 +21,8 @@ public class LinkedListDeque<T>{
     public LinkedListDeque(){
         this.size = 0;
         this.sentinel = new node(null,null,null);
+        sentinel.p_next=sentinel;
+        sentinel.p_last=sentinel;
     }
     public void addFirst(T data){
         node new_node = new node(sentinel.p_next,sentinel,data);
@@ -86,5 +88,20 @@ public class LinkedListDeque<T>{
            i++;
        }
        return data;
+    }
+    public static void main(String[] args){
+        int i = 0;
+        LinkedListDeque a = new LinkedListDeque();
+        while(i<30){
+            a.addFirst(i);
+            a.addLast(i);
+            if( i%10== 0) {
+                a.printDeque();
+            }
+            //a.test_printarray();
+            a.printDeque();
+            i++;
+        }
+        a.printDeque();
     }
 }
