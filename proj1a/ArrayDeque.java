@@ -5,80 +5,82 @@ public class ArrayDeque<T> {
     private int nextLast;
     private int nextFirst;
     public ArrayDeque(){
-        this.array = (T[]) new Object[8];
-        nextFirst = 3;
-        nextLast = 4;
-        size = 0;
+        this.array=(T[]) new Object[8];
+        nextFirst=3;
+        nextLast=4;
+        size=0;
     }
     private int index_increment(int index,int increment){
-        if(increment == +1){
-            index ++;
-            if(index == array.length){
-                index = 0;
+        if(increment==1){
+            index++;
+            if(index==array.length){
+                index=0;
             }
-        } else if (increment == -1) {
-            index --;
-            if (index == -1){
-                index = array.length-1;
+        } else if (increment==-1) {
+            index--;
+            if (index==-1){
+                index=array.length-1;
             }
         }
         return index;
     }
     public void addFirst(T item){
         this.capacity_check();
-        array[nextFirst] = item;
-        this.nextFirst = index_increment(nextFirst,-1);
-        size ++;
+        array[nextFirst]=item;
+        this.nextFirst=index_increment(nextFirst,-1);
+        size++;
     }
     public void addLast(T item){
         this.capacity_check();
-        array[nextLast] = item;
-        this.nextLast = index_increment(nextLast,+1);
-        size ++;
+        array[nextLast]=item;
+        this.nextLast=index_increment(nextLast,+1);
+        size++;
     }
     public boolean isEmpty(){
-        return size == 0;
+        return size==0;
     }
     public int size(){
         return size;
     }
     public void printDeque(){
-        int index = index_increment(nextFirst,+1);
-        while (index != nextLast){
-            System.out.print(array[index] + " ");
-            index = index_increment(index,+1);
+        int index=index_increment(nextFirst,+1);
+        while (index!=nextLast){
+            System.out.print(array[index]+" ");
+            index=index_increment(index,+1);
         }
         System.out.println();
     }
     public T removeFirst(){
         //An error took place here: Remove action imposed on empty list decreased the size.
-        if(size == 0){
+        if(size==0){
             return null;
         }
         this.nextFirst=index_increment(nextFirst,+1);
         size--;
+        T value=array[nextFirst];
         if(array.length >= 16) {
             this.usage_check();
         }
-        return array[nextFirst];
+        return value;
     }
     public T removeLast(){
-        if(size == 0){
+        if(size==0){
             return null;
         }
         this.nextLast=index_increment(nextLast,-1);
         size--;
+        T value=array[nextLast];
         if(array.length >= 16) {
             this.usage_check();
         }
-        return array[nextLast];
+        return value;
     }
     public T get(int index){
         T item;
-        int index_now = index_increment(nextFirst,+1);
+        int index_now=index_increment(nextFirst,+1);
         int i=0;
-        while( i<index){
-            index_now = index_increment(index_now,+1);
+        while(i<index){
+            index_now=index_increment(index_now,+1);
             i++;
         }
         item=array[index_now];
@@ -99,25 +101,21 @@ public class ArrayDeque<T> {
         nextLast=size;
     }
     private void usage_check(){
-        if(((double)size/array.length) < usage_limit){
-            if(usage_limit < 0.5) {
+        if(((double)size)/array.length<0.25){
                 this.size_revise(size * 2);
-            }else{
-                this.size_revise(Math.max(size,(int) ((double)size/usage_limit)));
-            }
         }
     }
     private void capacity_check(){
-        if(size == array.length){
-            this.size_revise((int) (size/usage_limit-1));
+        if(size>=array.length){
+            this.size_revise(size*4);
         }
     }
-    public static void main(String[] args){
+    /*public static void main(String[] args){
         int i = 0;
         ArrayDeque a = new ArrayDeque();
         while(i<9){
             a.addFirst(1);
             a.addLast(2);
         }
-    }
+    }*/
 }

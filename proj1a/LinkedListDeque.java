@@ -1,9 +1,9 @@
-public class LinkedListDeque<Item>{
+public class LinkedListDeque<T>{
     private class node{
         node p_next;
         node p_last;
-        Item data;
-        public node(node next,node last,Item data){
+        T data;
+        public node(node next,node last,T data){
             p_next = next;
             p_last = last;
             this.data = data;
@@ -11,7 +11,7 @@ public class LinkedListDeque<Item>{
     }
     private int size;
     private node sentinel;
-    public LinkedListDeque(Item data){
+    public LinkedListDeque(T data){
         this.size = 1;
         this.sentinel = new node(null,null,data);
         //This "data" above is meaningless and will not be used.
@@ -22,13 +22,13 @@ public class LinkedListDeque<Item>{
         this.size = 0;
         this.sentinel = new node(null,null,null);
     }
-    public void addFirst(Item data){
+    public void addFirst(T data){
         node new_node = new node(sentinel.p_next,sentinel,data);
         sentinel.p_next = new_node;
         new_node.p_next.p_last = new_node;
         size++;
     }
-    public void addLast(Item data){
+    public void addLast(T data){
         node new_node = new node(sentinel,sentinel.p_last,data);
         new_node.p_last.p_next = new_node;
         sentinel.p_last = new_node;
@@ -53,7 +53,7 @@ public class LinkedListDeque<Item>{
         }
         System.out.println();
     }
-    public Item removeFirst(){
+    public T removeFirst(){
         if(size == 0){
             return null;
         }
@@ -63,7 +63,7 @@ public class LinkedListDeque<Item>{
         size --;
         return save.data;
     }
-    public Item removeLast(){
+    public T removeLast(){
         if(size == 0){
             return null;
         }
@@ -73,12 +73,12 @@ public class LinkedListDeque<Item>{
         size --;
         return save.data;
     }
-    public Item get(int index){
+    public T get(int index){
        if(index >= size){
            return null;
        }
        int i = 0;
-       Item data = null;
+       T data = null;
        node ptr = sentinel.p_next;
        while(i <= index){
            data = ptr.data;
