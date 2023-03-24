@@ -55,9 +55,11 @@ public class ArrayDeque<T> {
         if(size==0){
             return null;
         }
+
         this.nextFirst=index_increment(nextFirst,+1);
         size--;
         T value=array[nextFirst];
+        array[nextFirst] = null;
         if(array.length >= 16) {
             this.usage_check();
         }
@@ -70,12 +72,14 @@ public class ArrayDeque<T> {
         this.nextLast=index_increment(nextLast,-1);
         size--;
         T value=array[nextLast];
+        array[nextFirst] = null;
         if(array.length >= 16) {
             this.usage_check();
         }
         return value;
     }
     public T get(int index){
+
         T item;
         int index_now=index_increment(nextFirst,+1);
         int i=0;
@@ -83,8 +87,11 @@ public class ArrayDeque<T> {
             index_now=index_increment(index_now,+1);
             i++;
         }
-        item=array[index_now];
-        return item;
+        if(index_now<array.length&&index_now>=0){
+            item=array[index_now];
+            return item;
+        }
+        return null;
     }
     private  void size_revise(int new_length){
         T[] new_array=(T[]) new Object[new_length];
