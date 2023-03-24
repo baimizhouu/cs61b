@@ -97,6 +97,7 @@ public class ArrayDeque<T> {
             i++;
             index = index_increment(index,1);
         }
+        array = new_array;
         nextFirst=new_length-1;
         nextLast=size;
     }
