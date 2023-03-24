@@ -12,7 +12,9 @@ public class ArrayDeque<T> {
         this.addFirst(item);
     }
     public ArrayDeque(){
-        T[] array = (T[]) new Object[8];
+        this.array = (T[]) new Object[8];
+        nextFirst = 3;
+        nextLast = 4;
         size = 0;
     }
     private int index_increment(int index,int increment){
