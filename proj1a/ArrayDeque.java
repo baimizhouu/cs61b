@@ -4,13 +4,6 @@ public class ArrayDeque<T> {
     private int size;
     private int nextLast;
     private int nextFirst;
-    public ArrayDeque(T item){
-        this.array = (T[]) new Object[8];
-
-        nextFirst = 3;
-        nextLast = 4;
-        this.addFirst(item);
-    }
     public ArrayDeque(){
         this.array = (T[]) new Object[8];
         nextFirst = 3;
@@ -62,9 +55,11 @@ public class ArrayDeque<T> {
         System.out.println();
     }
     public T removeFirst(){
-        if(size != 0) {
-            this.nextFirst = index_increment(nextFirst,+1);
+        //An error took place here: Remove action imposed on empty list decreased the size.
+        if(size == 0){
+            return null;
         }
+        this.nextFirst = index_increment(nextFirst,+1);
         size -- ;
         if(array.length >= 16) {
             this.usage_check();
@@ -72,9 +67,10 @@ public class ArrayDeque<T> {
         return array[nextFirst];
     }
     public T removeLast(){
-        if(size != 0){
-            this.nextLast = index_increment(nextLast,-1);
+        if(size == 0){
+            return null;
         }
+        this.nextLast = index_increment(nextLast,-1);
         size -- ;
         if(array.length >= 16) {
             this.usage_check();
@@ -83,39 +79,28 @@ public class ArrayDeque<T> {
     }
     public T get(int index){
         T item;
-        int index_now = nextFirst;
-        int i = 0 ;
-        while( i <= index){
+        int index_now = index_increment(nextFirst,+1);
+        int i=0;
+        while( i<index){
             index_now = index_increment(index_now,+1);
             i++;
         }
-        item = array[index_now];
+        item=array[index_now];
         return item;
     }
     private  void size_revise(int new_length){
-        //Hardest and most important method in this class.
-        //1.expand
-        if(new_length > array.length){
-            T[] new_array = (T[]) new Object[new_length];
-            int incre = new_length - array.length;
-            System.arraycopy(array,0,new_array,0,nextLast);
-            System.arraycopy(array,nextFirst+1,new_array,nextLast+incre,array.length-nextFirst-1);
-            nextFirst = nextLast+incre-1;
-            array = new_array;
+        T[] new_array=(T[]) new Object[new_length];
+        nextFirst = index_increment(nextFirst,1);
+        nextLast = index_increment(nextFirst,-1);
+        int i = 0;
+        int index = nextFirst;
+        while(index != nextLast){
+            new_array[i] = array[index];
+            i++;
+            index = index_increment(index,1);
         }
-        //2.contract
-        if(new_length< array.length){
-            T[] new_array = (T[]) new Object[new_length];
-            int index_now = index_increment(nextFirst,+1);
-            int i = 0;
-            while(index_now != nextLast){
-                new_array[i] = array[index_now];
-                index_now = index_increment(index_now,+1);
-            }
-            array = new_array;
-            nextFirst = new_length-1;
-            nextLast = size - 1;
-        }
+        nextFirst=new_length-1;
+        nextLast=size;
     }
     private void usage_check(){
         if(((double)size/array.length) < usage_limit){
