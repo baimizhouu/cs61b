@@ -131,19 +131,19 @@ public class ArrayDeque<T> {
         System.out.println();
         System.out.println("first:"+nextFirst+"Last:"+nextLast);
     }
-    public static void main(String[] args){
+    /*public static void main(String[] args){
         int i = 0;
         ArrayDeque a = new ArrayDeque();
         while(i<30){
             a.addFirst(i);
             a.addLast(i);
-            /*if( i%10== 0) {
+            if( i%10== 0) {
                 a.printDeque();
-            }*/
+            }
             a.test_printarray();
             a.printDeque();
             i++;
         }
         a.printDeque();
-    }
+    }*/
 }
