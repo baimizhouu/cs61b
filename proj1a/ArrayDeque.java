@@ -25,16 +25,17 @@ public class ArrayDeque<T> {
         return index;
     }
     public void addFirst(T item){
-        this.capacity_check();
         array[nextFirst]=item;
         this.nextFirst=index_increment(nextFirst,-1);
         size++;
+        this.capacity_check();
+
     }
     public void addLast(T item){
-        this.capacity_check();
         array[nextLast]=item;
         this.nextLast=index_increment(nextLast,+1);
         size++;
+        this.capacity_check();
     }
     public boolean isEmpty(){
         return size==0;
@@ -99,10 +100,13 @@ public class ArrayDeque<T> {
         nextLast=index_increment(nextFirst,-1);
         int i=0;
         int index=nextFirst;
-        while(index!=nextLast){
-            new_array[i] = array[index];
+        while(true){
+            new_array[i]=array[index];
             i++;
-            index = index_increment(index,1);
+            index=index_increment(index,1);
+            if(i==size){
+                break;
+            }
         }
         array = new_array;
         nextFirst=new_length-1;
@@ -118,12 +122,28 @@ public class ArrayDeque<T> {
             this.size_revise(size*4);
         }
     }
-    /*public static void main(String[] args){
+    private void test_printarray(){
+        System.out.print("array: ");
+        for(int i = 0;i<array.length;i++){
+            System.out.print(array[i]+" ");
+
+        }
+        System.out.println();
+        System.out.println("first:"+nextFirst+"Last:"+nextLast);
+    }
+    public static void main(String[] args){
         int i = 0;
         ArrayDeque a = new ArrayDeque();
-        while(i<9){
-            a.addFirst(1);
-            a.addLast(2);
+        while(i<30){
+            a.addFirst(i);
+            a.addLast(i);
+            /*if( i%10== 0) {
+                a.printDeque();
+            }*/
+            a.test_printarray();
+            a.printDeque();
+            i++;
         }
-    }*/
+        a.printDeque();
+    }
 }
