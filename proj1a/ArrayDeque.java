@@ -25,17 +25,13 @@ public class ArrayDeque<T> {
         return index;
     }
     public void addFirst(T item){
-        if(this.capacity_check()){
-            this.size_revise((int) (size/usage_limit-1));
-        }
+        this.capacity_check();
         array[nextFirst] = item;
         this.nextFirst = index_increment(nextFirst,-1);
         size ++;
     }
     public void addLast(T item){
-        if(this.capacity_check()){
-            this.size_revise((int) (size/usage_limit-1));
-        }
+        this.capacity_check();
         array[nextLast] = item;
         this.nextLast = index_increment(nextLast,+1);
         size ++;
@@ -59,8 +55,8 @@ public class ArrayDeque<T> {
         if(size == 0){
             return null;
         }
-        this.nextFirst = index_increment(nextFirst,+1);
-        size -- ;
+        this.nextFirst=index_increment(nextFirst,+1);
+        size--;
         if(array.length >= 16) {
             this.usage_check();
         }
@@ -70,8 +66,8 @@ public class ArrayDeque<T> {
         if(size == 0){
             return null;
         }
-        this.nextLast = index_increment(nextLast,-1);
-        size -- ;
+        this.nextLast=index_increment(nextLast,-1);
+        size--;
         if(array.length >= 16) {
             this.usage_check();
         }
@@ -90,11 +86,11 @@ public class ArrayDeque<T> {
     }
     private  void size_revise(int new_length){
         T[] new_array=(T[]) new Object[new_length];
-        nextFirst = index_increment(nextFirst,1);
-        nextLast = index_increment(nextFirst,-1);
-        int i = 0;
-        int index = nextFirst;
-        while(index != nextLast){
+        nextFirst=index_increment(nextFirst,1);
+        nextLast=index_increment(nextFirst,-1);
+        int i=0;
+        int index=nextFirst;
+        while(index!=nextLast){
             new_array[i] = array[index];
             i++;
             index = index_increment(index,1);
@@ -111,7 +107,17 @@ public class ArrayDeque<T> {
             }
         }
     }
-    private boolean capacity_check(){
-        return size == array.length;
+    private void capacity_check(){
+        if(size == array.length){
+            this.size_revise((int) (size/usage_limit-1));
+        }
+    }
+    public static void main(String[] args){
+        int i = 0;
+        ArrayDeque a = new ArrayDeque();
+        while(i<9){
+            a.addFirst(1);
+            a.addLast(2);
+        }
     }
 }
